@@ -1,0 +1,157 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 14,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "hw00",
+      "displayName": "[00] Basic Project",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/00",
+      "cacheVariables": {
+        "HW": "00",
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_STANDARD": "17",
+        "CMAKE_C_COMPILER": "D:/msys64/ucrt64/bin/gcc.exe",
+        "CMAKE_CXX_COMPILER": "D:/msys64/ucrt64/bin/g++.exe"
+      }
+    },
+    {
+      "name": "hw01",
+      "displayName": "[01] Rasterizer",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/01",
+      "cacheVariables": {
+        "HW": "01/code",
+        "CMAKE_CXX_STANDARD": "17",
+        "CMAKE_C_COMPILER": "D:/msys64/ucrt64/bin/gcc.exe",
+        "CMAKE_CXX_COMPILER": "D:/msys64/ucrt64/bin/g++.exe"
+      }
+    },
+    {
+      "name": "hw02",
+      "displayName": "[02] Transform",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/02",
+      "cacheVariables": {
+        "HW": "02/code",
+        "CMAKE_C_COMPILER": "D:/msys64/ucrt64/bin/gcc.exe",
+        "CMAKE_CXX_COMPILER": "D:/msys64/ucrt64/bin/g++.exe"
+      }
+    },
+    {
+      "name": "hw03",
+      "displayName": "[03] Texture Mapping",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/03",
+      "cacheVariables": {
+        "HW": "03/code",
+        "MODELS_PATH": "${sourceDir}/homework/03/code/models",
+        "CMAKE_C_COMPILER": "D:/msys64/ucrt64/bin/gcc.exe",
+        "CMAKE_CXX_COMPILER": "D:/msys64/ucrt64/bin/g++.exe"
+      }
+    },
+    {
+      "name": "hw04",
+      "displayName": "[04] Shading Models",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/04",
+      "cacheVariables": {
+        "HW": "04/code",
+        "CMAKE_C_COMPILER": "D:/msys64/ucrt64/bin/gcc.exe",
+        "CMAKE_CXX_COMPILER": "D:/msys64/ucrt64/bin/g++.exe"
+      }
+    },
+    {
+      "name": "hw05",
+      "displayName": "[05] Ray Tracing",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/05",
+      "cacheVariables": {
+        "HW": "05/code",
+        "CMAKE_C_COMPILER": "D:/msys64/ucrt64/bin/gcc.exe",
+        "CMAKE_CXX_COMPILER": "D:/msys64/ucrt64/bin/g++.exe"
+      }
+    },
+    {
+      "name": "hw06",
+      "displayName": "[06] BVH Acceleration",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/06",
+      "cacheVariables": {
+        "HW": "06/hw06",
+        "CMAKE_C_COMPILER": "D:/msys64/ucrt64/bin/gcc.exe",
+        "CMAKE_CXX_COMPILER": "D:/msys64/ucrt64/bin/g++.exe"
+      }
+    },
+    {
+      "name": "hw07",
+      "displayName": "[07] Path Tracing",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/07",
+      "cacheVariables": {
+        "HW": "07/hw07",
+        "CMAKE_C_COMPILER": "D:/msys64/ucrt64/bin/gcc.exe",
+        "CMAKE_CXX_COMPILER": "D:/msys64/ucrt64/bin/g++.exe"
+      }
+    },
+    {
+      "name": "hw08",
+      "displayName": "[08] Physic Simulation",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/08",
+      "cacheVariables": {
+        "HW": "08",
+        "CGL_ROOT_DIR": "${sourceDir}/homework/08/CGL",
+        "CMAKE_C_COMPILER": "D:/msys64/ucrt64/bin/gcc.exe",
+        "CMAKE_CXX_COMPILER": "D:/msys64/ucrt64/bin/g++.exe"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "build-hw00",
+      "configurePreset": "hw00"
+    },
+    {
+      "name": "build-hw01",
+      "configurePreset": "hw01"
+    },
+    {
+      "name": "build-hw02",
+      "configurePreset": "hw02"
+    },
+    {
+      "name": "build-hw03",
+      "configurePreset": "hw03"
+    },
+    {
+      "name": "build-hw04",
+      "configurePreset": "hw04"
+    },
+    {
+      "name": "build-hw05",
+      "configurePreset": "hw05"
+    },
+    {
+      "name": "build-hw06",
+      "configurePreset": "hw06"
+    },
+    {
+      "name": "build-hw07",
+      "configurePreset": "hw07"
+    },
+    {
+      "name": "build-hw08",
+      "configurePreset": "hw08"
+    }
+  ],
+  "vendor": {
+    "microsoft.com/VisualStudioSettings/CMake/1.0": {
+      "hostOS": [ "Windows" ]
+    }
+  }
+}
