@@ -41,9 +41,26 @@ int main()
     std::cout << "Example of output \n";
     std::cout << i << std::endl;
     // matrix add i + j
+    std::cout << "Example of add \n";
+    std::cout << i + j << std::endl;
     // matrix scalar multiply i * 2.0
+    std::cout << "Example of scalar multiply \n";
+    std::cout << i * 2.0 << std::endl;
     // matrix multiply i * j
+    std::cout << "Example of multiply \n";
+    std::cout << i * j << std::endl;
     // matrix multiply vector i * v
-
+    std::cout << "Example of multiply vector \n";
+    std::cout << i * v << std::endl;
+    
+    float sin45=std::sin(45), cos45=std::cos(45);
+    Eigen::Matrix3f rotation_matrix;
+    rotation_matrix << cos45, -sin45, 0, sin45, cos45, 0, 0, 0, 1;
+    Eigen::Matrix3f translation_matrix;
+    translation_matrix << 1, 0, 1, 0, 1, 2, 0, 0, 1;
+    Eigen::Vector3f given_point(2, 1, 1);
+    Eigen::Vector3f transformed_point = translation_matrix * rotation_matrix * given_point;
+    std::cout << "Example of transform vector \n";
+    std::cout << transformed_point << std::endl;
     return 0;
 }

@@ -13,7 +13,7 @@
       "binaryDir": "${sourceDir}/build/hw00",
       "cacheVariables": {
         "HW": "00",
-        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_BUILD_TYPE": "Release",
         "CMAKE_CXX_STANDARD": "17",
         "CMAKE_C_COMPILER": "D:/msys64/ucrt64/bin/gcc.exe",
         "CMAKE_CXX_COMPILER": "D:/msys64/ucrt64/bin/g++.exe"
@@ -26,6 +26,7 @@
       "binaryDir": "${sourceDir}/build/hw01",
       "cacheVariables": {
         "HW": "01/code",
+        "CMAKE_BUILD_TYPE": "Release",
         "CMAKE_CXX_STANDARD": "17",
         "CMAKE_C_COMPILER": "D:/msys64/ucrt64/bin/gcc.exe",
         "CMAKE_CXX_COMPILER": "D:/msys64/ucrt64/bin/g++.exe"
@@ -38,6 +39,7 @@
       "binaryDir": "${sourceDir}/build/hw02",
       "cacheVariables": {
         "HW": "02/code",
+        "CMAKE_BUILD_TYPE": "Release",
         "CMAKE_C_COMPILER": "D:/msys64/ucrt64/bin/gcc.exe",
         "CMAKE_CXX_COMPILER": "D:/msys64/ucrt64/bin/g++.exe"
       }
@@ -50,6 +52,7 @@
       "cacheVariables": {
         "HW": "03/code",
         "MODELS_PATH": "${sourceDir}/homework/03/code/models",
+        "CMAKE_BUILD_TYPE": "Release",
         "CMAKE_C_COMPILER": "D:/msys64/ucrt64/bin/gcc.exe",
         "CMAKE_CXX_COMPILER": "D:/msys64/ucrt64/bin/g++.exe"
       }
@@ -61,6 +64,7 @@
       "binaryDir": "${sourceDir}/build/hw04",
       "cacheVariables": {
         "HW": "04/code",
+        "CMAKE_BUILD_TYPE": "Release",
         "CMAKE_C_COMPILER": "D:/msys64/ucrt64/bin/gcc.exe",
         "CMAKE_CXX_COMPILER": "D:/msys64/ucrt64/bin/g++.exe"
       }
@@ -72,6 +76,7 @@
       "binaryDir": "${sourceDir}/build/hw05",
       "cacheVariables": {
         "HW": "05/code",
+        "CMAKE_BUILD_TYPE": "Release",
         "CMAKE_C_COMPILER": "D:/msys64/ucrt64/bin/gcc.exe",
         "CMAKE_CXX_COMPILER": "D:/msys64/ucrt64/bin/g++.exe"
       }
@@ -83,6 +88,7 @@
       "binaryDir": "${sourceDir}/build/hw06",
       "cacheVariables": {
         "HW": "06/hw06",
+        "CMAKE_BUILD_TYPE": "Release",
         "CMAKE_C_COMPILER": "D:/msys64/ucrt64/bin/gcc.exe",
         "CMAKE_CXX_COMPILER": "D:/msys64/ucrt64/bin/g++.exe"
       }
@@ -94,6 +100,7 @@
       "binaryDir": "${sourceDir}/build/hw07",
       "cacheVariables": {
         "HW": "07/hw07",
+        "CMAKE_BUILD_TYPE": "Release",
         "CMAKE_C_COMPILER": "D:/msys64/ucrt64/bin/gcc.exe",
         "CMAKE_CXX_COMPILER": "D:/msys64/ucrt64/bin/g++.exe"
       }
@@ -106,6 +113,7 @@
       "cacheVariables": {
         "HW": "08",
         "CGL_ROOT_DIR": "${sourceDir}/homework/08/CGL",
+        "CMAKE_BUILD_TYPE": "Release",
         "CMAKE_C_COMPILER": "D:/msys64/ucrt64/bin/gcc.exe",
         "CMAKE_CXX_COMPILER": "D:/msys64/ucrt64/bin/g++.exe"
       }
