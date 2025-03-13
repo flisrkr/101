@@ -10,7 +10,7 @@
       "name": "hw00",
       "displayName": "[00] Basic Project",
       "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build/00",
+      "binaryDir": "${sourceDir}/build/hw00",
       "cacheVariables": {
         "HW": "00",
         "CMAKE_BUILD_TYPE": "Debug",
@@ -23,7 +23,7 @@
       "name": "hw01",
       "displayName": "[01] Rasterizer",
       "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build/01",
+      "binaryDir": "${sourceDir}/build/hw01",
       "cacheVariables": {
         "HW": "01/code",
         "CMAKE_CXX_STANDARD": "17",
@@ -35,7 +35,7 @@
       "name": "hw02",
       "displayName": "[02] Transform",
       "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build/02",
+      "binaryDir": "${sourceDir}/build/hw02",
       "cacheVariables": {
         "HW": "02/code",
         "CMAKE_C_COMPILER": "D:/msys64/ucrt64/bin/gcc.exe",
@@ -46,7 +46,7 @@
       "name": "hw03",
       "displayName": "[03] Texture Mapping",
       "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build/03",
+      "binaryDir": "${sourceDir}/build/hw03",
       "cacheVariables": {
         "HW": "03/code",
         "MODELS_PATH": "${sourceDir}/homework/03/code/models",
@@ -58,7 +58,7 @@
       "name": "hw04",
       "displayName": "[04] Shading Models",
       "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build/04",
+      "binaryDir": "${sourceDir}/build/hw04",
       "cacheVariables": {
         "HW": "04/code",
         "CMAKE_C_COMPILER": "D:/msys64/ucrt64/bin/gcc.exe",
@@ -69,7 +69,7 @@
       "name": "hw05",
       "displayName": "[05] Ray Tracing",
       "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build/05",
+      "binaryDir": "${sourceDir}/build/hw05",
       "cacheVariables": {
         "HW": "05/code",
         "CMAKE_C_COMPILER": "D:/msys64/ucrt64/bin/gcc.exe",
@@ -80,7 +80,7 @@
       "name": "hw06",
       "displayName": "[06] BVH Acceleration",
       "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build/06",
+      "binaryDir": "${sourceDir}/build/hw06",
       "cacheVariables": {
         "HW": "06/hw06",
         "CMAKE_C_COMPILER": "D:/msys64/ucrt64/bin/gcc.exe",
@@ -91,7 +91,7 @@
       "name": "hw07",
       "displayName": "[07] Path Tracing",
       "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build/07",
+      "binaryDir": "${sourceDir}/build/hw07",
       "cacheVariables": {
         "HW": "07/hw07",
         "CMAKE_C_COMPILER": "D:/msys64/ucrt64/bin/gcc.exe",
@@ -102,7 +102,7 @@
       "name": "hw08",
       "displayName": "[08] Physic Simulation",
       "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build/08",
+      "binaryDir": "${sourceDir}/build/hw08",
       "cacheVariables": {
         "HW": "08",
         "CGL_ROOT_DIR": "${sourceDir}/homework/08/CGL",
