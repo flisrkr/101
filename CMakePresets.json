@@ -9,113 +9,95 @@
     {
       "name": "hw00",
       "displayName": "[00] Basic Project",
-      "generator": "Ninja",
+      "generator": "Unix Makefiles",
       "binaryDir": "${sourceDir}/build/hw00",
       "cacheVariables": {
         "HW": "00",
         "CMAKE_BUILD_TYPE": "Release",
-        "CMAKE_CXX_STANDARD": "17",
-        "CMAKE_C_COMPILER": "D:/msys64/ucrt64/bin/gcc.exe",
-        "CMAKE_CXX_COMPILER": "D:/msys64/ucrt64/bin/g++.exe"
+        "CMAKE_CXX_STANDARD": "17"
       }
     },
     {
       "name": "hw01",
       "displayName": "[01] Rasterizer",
-      "generator": "Ninja",
+      "generator": "Unix Makefiles",
       "binaryDir": "${sourceDir}/build/hw01",
       "cacheVariables": {
         "HW": "01/code",
         "CMAKE_BUILD_TYPE": "Release",
-        "CMAKE_CXX_STANDARD": "17",
-        "CMAKE_C_COMPILER": "D:/msys64/ucrt64/bin/gcc.exe",
-        "CMAKE_CXX_COMPILER": "D:/msys64/ucrt64/bin/g++.exe"
+        "CMAKE_CXX_STANDARD": "17"
       }
     },
     {
       "name": "hw02",
       "displayName": "[02] Transform",
-      "generator": "Ninja",
+      "generator": "Unix Makefiles",
       "binaryDir": "${sourceDir}/build/hw02",
       "cacheVariables": {
         "HW": "02/code",
-        "CMAKE_BUILD_TYPE": "Release",
-        "CMAKE_C_COMPILER": "D:/msys64/ucrt64/bin/gcc.exe",
-        "CMAKE_CXX_COMPILER": "D:/msys64/ucrt64/bin/g++.exe"
+        "CMAKE_BUILD_TYPE": "Release"
       }
     },
     {
       "name": "hw03",
       "displayName": "[03] Texture Mapping",
-      "generator": "Ninja",
+      "generator": "Unix Makefiles",
       "binaryDir": "${sourceDir}/build/hw03",
       "cacheVariables": {
         "HW": "03/code",
         "MODELS_PATH": "${sourceDir}/homework/03/code/models",
-        "CMAKE_BUILD_TYPE": "Release",
-        "CMAKE_C_COMPILER": "D:/msys64/ucrt64/bin/gcc.exe",
-        "CMAKE_CXX_COMPILER": "D:/msys64/ucrt64/bin/g++.exe"
+        "CMAKE_BUILD_TYPE": "Release"
       }
     },
     {
       "name": "hw04",
       "displayName": "[04] Shading Models",
-      "generator": "Ninja",
+      "generator": "Unix Makefiles",
       "binaryDir": "${sourceDir}/build/hw04",
       "cacheVariables": {
         "HW": "04/code",
-        "CMAKE_BUILD_TYPE": "Release",
-        "CMAKE_C_COMPILER": "D:/msys64/ucrt64/bin/gcc.exe",
-        "CMAKE_CXX_COMPILER": "D:/msys64/ucrt64/bin/g++.exe"
+        "CMAKE_BUILD_TYPE": "Release"
       }
     },
     {
       "name": "hw05",
       "displayName": "[05] Ray Tracing",
-      "generator": "Ninja",
+      "generator": "Unix Makefiles",
       "binaryDir": "${sourceDir}/build/hw05",
       "cacheVariables": {
         "HW": "05/code",
-        "CMAKE_BUILD_TYPE": "Release",
-        "CMAKE_C_COMPILER": "D:/msys64/ucrt64/bin/gcc.exe",
-        "CMAKE_CXX_COMPILER": "D:/msys64/ucrt64/bin/g++.exe"
+        "CMAKE_BUILD_TYPE": "Release"
       }
     },
     {
       "name": "hw06",
       "displayName": "[06] BVH Acceleration",
-      "generator": "Ninja",
+      "generator": "Unix Makefiles",
       "binaryDir": "${sourceDir}/build/hw06",
       "cacheVariables": {
         "HW": "06/hw06",
-        "CMAKE_BUILD_TYPE": "Release",
-        "CMAKE_C_COMPILER": "D:/msys64/ucrt64/bin/gcc.exe",
-        "CMAKE_CXX_COMPILER": "D:/msys64/ucrt64/bin/g++.exe"
+        "CMAKE_BUILD_TYPE": "Release"
       }
     },
     {
       "name": "hw07",
       "displayName": "[07] Path Tracing",
-      "generator": "Ninja",
+      "generator": "Unix Makefiles",
       "binaryDir": "${sourceDir}/build/hw07",
       "cacheVariables": {
         "HW": "07/hw07",
-        "CMAKE_BUILD_TYPE": "Release",
-        "CMAKE_C_COMPILER": "D:/msys64/ucrt64/bin/gcc.exe",
-        "CMAKE_CXX_COMPILER": "D:/msys64/ucrt64/bin/g++.exe"
+        "CMAKE_BUILD_TYPE": "Release"
       }
     },
     {
       "name": "hw08",
       "displayName": "[08] Physic Simulation",
-      "generator": "Ninja",
+      "generator": "Unix Makefiles",
       "binaryDir": "${sourceDir}/build/hw08",
       "cacheVariables": {
         "HW": "08",
         "CGL_ROOT_DIR": "${sourceDir}/homework/08/CGL",
-        "CMAKE_BUILD_TYPE": "Release",
-        "CMAKE_C_COMPILER": "D:/msys64/ucrt64/bin/gcc.exe",
-        "CMAKE_CXX_COMPILER": "D:/msys64/ucrt64/bin/g++.exe"
+        "CMAKE_BUILD_TYPE": "Release"
       }
     }
   ],

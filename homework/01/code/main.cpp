@@ -2,7 +2,7 @@
 #include "rasterizer.hpp"
 #include <eigen3/Eigen/Eigen>
 #include <iostream>
-#include <opencv4/opencv2/opencv.hpp>
+#include <opencv2/opencv.hpp>
 
 constexpr double MY_PI = 3.1415926;
 
@@ -26,8 +26,30 @@ Eigen::Matrix4f get_model_matrix(float rotation_angle)
     // TODO: Implement this function
     // Create the model matrix for rotating the triangle around the Z axis.
     // Then return it.
+    Eigen::Matrix4f rotate;
+    float rotation_radian = rotation_angle * MY_PI / 180.0f;
+    rotate << std::cos(rotation_radian), -std::sin(rotation_radian), 0, 0,
+        std::sin(rotation_radian), std::cos(rotation_radian), 0, 0, 0, 0, 1, 0, 0, 0, 0, 1;
+
+    model = rotate * model;
 
     return model;
+}
+
+Eigen::Matrix4f get_rotation(Vector3f axis, float angle)
+{
+    axis.normalize();
+    float radian = angle * MY_PI / 180.0f;
+    Eigen::Matrix4f rotation = Eigen::Matrix4f::Identity();
+    Eigen::Matrix3f I = Eigen::Matrix3f::Identity();
+    Eigen::Matrix3f R = Eigen::Matrix3f::Zero();
+    Eigen::Matrix3f K;
+    K << 0, -axis[2], axis[1],
+        axis[2], 0, -axis[0],
+        -axis[1], axis[0], 0;
+    R = I + std::sin(radian) * K + (1 - std::cos(radian)) * K * K;
+    rotation.block<3, 3>(0, 0) = R;
+    return rotation;
 }
 
 Eigen::Matrix4f get_projection_matrix(float eye_fov, float aspect_ratio,
@@ -40,20 +62,36 @@ Eigen::Matrix4f get_projection_matrix(float eye_fov, float aspect_ratio,
     // TODO: Implement this function
     // Create the projection matrix for the given parameters.
     // Then return it.
-
+    Eigen::Matrix4f perspective;
+    perspective << zNear, 0, 0, 0,
+        0, zNear, 0, 0,
+        0, 0, zNear + zFar, -zNear * zFar,
+        0, 0, 1, 0;
+    projection = perspective * projection;
+    float eye_fov_raidian = eye_fov * MY_PI / 180.0f;
+    float top = -zNear * std::tan(eye_fov_raidian / 2);
+    float right = top * aspect_ratio;
+    Eigen::Matrix4f orthographic;
+    orthographic << 1 / right, 0, 0, 0,
+        0, 1 / top, 0, 0,
+        0, 0, 2 / (zNear - zFar), (zFar + zNear) / (zFar - zNear),
+        0, 0, 0, 1;
+    projection = orthographic * projection;
     return projection;
 }
 
-int main(int argc, const char** argv)
+int main(int argc, const char **argv)
 {
     float angle = 0;
     bool command_line = false;
     std::string filename = "output.png";
 
-    if (argc >= 3) {
+    if (argc >= 3)
+    {
         command_line = true;
         angle = std::stof(argv[2]); // -r by default
-        if (argc == 4) {
+        if (argc == 4)
+        {
             filename = std::string(argv[3]);
         }
         else
@@ -74,7 +112,8 @@ int main(int argc, const char** argv)
     int key = 0;
     int frame_count = 0;
 
-    if (command_line) {
+    if (command_line)
+    {
         r.clear(rst::Buffers::Color | rst::Buffers::Depth);
 
         r.set_model(get_model_matrix(angle));
@@ -90,7 +129,8 @@ int main(int argc, const char** argv)
         return 0;
     }
 
-    while (key != 27) {
+    while (key != 27)
+    {
         r.clear(rst::Buffers::Color | rst::Buffers::Depth);
 
         r.set_model(get_model_matrix(angle));
@@ -106,10 +146,12 @@ int main(int argc, const char** argv)
 
         std::cout << "frame count: " << frame_count++ << '\n';
 
-        if (key == 'a') {
+        if (key == 'a')
+        {
             angle += 10;
         }
-        else if (key == 'd') {
+        else if (key == 'd')
+        {
             angle -= 10;
         }
     }
