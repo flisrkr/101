@@ -8,3 +8,4 @@ build/*/.ninja_log
 build/*/build.ninja
 build/*/cmake_install.cmake
 build/*/CMakeCache.txt
+build/*/Makefile
