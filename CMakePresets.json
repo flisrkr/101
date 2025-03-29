@@ -46,6 +46,7 @@
       "cacheVariables": {
         "HW": "03/code",
         "MODELS_PATH": "${sourceDir}/homework/03/code/models",
+        "OUTPUT_PATH": "${sourceDir}/homework/03",
         "CMAKE_BUILD_TYPE": "Release"
       }
     },
