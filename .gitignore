@@ -9,3 +9,4 @@ build/*/build.ninja
 build/*/cmake_install.cmake
 build/*/CMakeCache.txt
 build/*/Makefile
+homework/04/further_aa_solutions.md

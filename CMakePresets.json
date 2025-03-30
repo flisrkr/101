@@ -57,6 +57,7 @@
       "binaryDir": "${sourceDir}/build/hw04",
       "cacheVariables": {
         "HW": "04/code",
+        "OUTPUT_PATH": "${sourceDir}/homework/04",
         "CMAKE_BUILD_TYPE": "Release"
       }
     },
