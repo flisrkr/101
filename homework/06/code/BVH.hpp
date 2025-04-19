@@ -9,6 +9,7 @@
 #include <vector>
 #include <memory>
 #include <ctime>
+#include <unordered_map>
 #include "Object.hpp"
 #include "Ray.hpp"
 #include "Bounds3.hpp"
@@ -33,7 +34,8 @@ public:
     };
 
     // BVHAccel Public Methods
-    BVHAccel(std::vector<Object *> p, int maxPrimsInNode = 1, SplitMethod splitMethod = SplitMethod::NAIVE);
+    BVHAccel(std::vector<Object *> p, int maxPrimsInNode = 1, SplitMethod splitMethod = SplitMethod::NAIVE,
+             int costTraversal = 1, int costIntersection = 1);
     Bounds3 WorldBound() const;
     ~BVHAccel();
 
@@ -44,11 +46,14 @@ public:
 
     // BVHAccel Private Methods
     BVHBuildNode *recursiveBuild(std::vector<Object *> objects);
+    Bounds3 &getObjectBounds(Object *obj);
 
     // BVHAccel Private Data
     const int maxPrimsInNode;
     const SplitMethod splitMethod;
     std::vector<Object *> primitives;
+    std::unordered_map<Object *, Bounds3> boundsCache;
+    const int costTraversal, costIntersection;
 };
 
 struct BVHBuildNode
@@ -56,7 +61,7 @@ struct BVHBuildNode
     Bounds3 bounds;
     BVHBuildNode *left;
     BVHBuildNode *right;
-    Object *object;
+    std::vector<Object *> objects;
 
 public:
     int splitAxis = 0, firstPrimOffset = 0, nPrimitives = 0;
@@ -66,7 +71,7 @@ public:
         bounds = Bounds3();
         left = nullptr;
         right = nullptr;
-        object = nullptr;
+        // objects = nullptr;
     }
 };
 

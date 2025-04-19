@@ -12,12 +12,12 @@
 class Vector3f
 {
 public:
-    float x, y, z;
+    double x, y, z;
     Vector3f() : x(0), y(0), z(0) {}
-    Vector3f(float xx) : x(xx), y(xx), z(xx) {}
-    Vector3f(float xx, float yy, float zz) : x(xx), y(yy), z(zz) {}
-    Vector3f operator*(const float &r) const { return Vector3f(x * r, y * r, z * r); }
-    Vector3f operator/(const float &r) const { return Vector3f(x / r, y / r, z / r); }
+    Vector3f(double xx) : x(xx), y(xx), z(xx) {}
+    Vector3f(double xx, double yy, double zz) : x(xx), y(yy), z(zz) {}
+    Vector3f operator*(const double &r) const { return Vector3f(x * r, y * r, z * r); }
+    Vector3f operator/(const double &r) const { return Vector3f(x / r, y / r, z / r); }
 
     Vector3f operator*(const Vector3f &v) const { return Vector3f(x * v.x, y * v.y, z * v.z); }
     Vector3f operator-(const Vector3f &v) const { return Vector3f(x - v.x, y - v.y, z - v.z); }
@@ -52,6 +52,10 @@ public:
     }
 };
 inline double Vector3f::operator[](int index) const
+{
+    return (&x)[index];
+}
+inline double &Vector3f::operator[](int index)
 {
     return (&x)[index];
 }
