@@ -77,7 +77,8 @@
       "generator": "Unix Makefiles",
       "binaryDir": "${sourceDir}/build/hw06",
       "cacheVariables": {
-        "HW": "06/hw06",
+        "HW": "06/code",
+        "MODELS_PATH":"${sourceDir}/homework/06/code/models",
         "CMAKE_BUILD_TYPE": "Release"
       }
     },

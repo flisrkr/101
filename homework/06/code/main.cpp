@@ -1,3 +1,7 @@
+#ifndef MODELS_PATH
+#define MODELS_PATH "E:/FLiSrKr/01_Workbench/GAMES/101/homework/06/code/models"
+#endif
+
 #include "Renderer.hpp"
 #include "Scene.hpp"
 #include "Triangle.hpp"
@@ -9,12 +13,11 @@
 // lights) as well as set the options for the render (image width and height,
 // maximum recursion depth, field-of-view, etc.). We then call the render
 // function().
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
     Scene scene(1280, 960);
 
-    MeshTriangle bunny("../models/bunny/bunny.obj");
-
+    MeshTriangle bunny(std::string(MODELS_PATH) + "/bunny/bunny.obj");
     scene.Add(&bunny);
     scene.Add(std::make_unique<Light>(Vector3f(-20, 70, 20), 1));
     scene.Add(std::make_unique<Light>(Vector3f(20, 70, 20), 1));
