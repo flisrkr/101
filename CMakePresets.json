@@ -88,7 +88,8 @@
       "generator": "Unix Makefiles",
       "binaryDir": "${sourceDir}/build/hw07",
       "cacheVariables": {
-        "HW": "07/hw07",
+        "HW": "07/code",
+        "MODELS_PATH":"${sourceDir}/homework/07/code/models",
         "CMAKE_BUILD_TYPE": "Release"
       }
     },

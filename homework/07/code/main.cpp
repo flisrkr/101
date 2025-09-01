@@ -1,3 +1,7 @@
+#ifndef MODELS_PATH
+#define MODELS_PATH "E:/FLiSrKr/01_Workbench/GAMES/101/homework/07/code/models"
+#endif
+
 #include "Renderer.hpp"
 #include "Scene.hpp"
 #include "Triangle.hpp"
@@ -10,27 +14,30 @@
 // lights) as well as set the options for the render (image width and height,
 // maximum recursion depth, field-of-view, etc.). We then call the render
 // function().
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
 
     // Change the definition here to change resolution
-    Scene scene(784, 784);
+    Scene scene(1024, 1024);
 
-    Material* red = new Material(DIFFUSE, Vector3f(0.0f));
+    Material *red = new Material(DIFFUSE, Vector3f(0.0f));
     red->Kd = Vector3f(0.63f, 0.065f, 0.05f);
-    Material* green = new Material(DIFFUSE, Vector3f(0.0f));
+    Material *green = new Material(DIFFUSE, Vector3f(0.0f));
     green->Kd = Vector3f(0.14f, 0.45f, 0.091f);
-    Material* white = new Material(DIFFUSE, Vector3f(0.0f));
+    Material *white = new Material(DIFFUSE, Vector3f(0.0f));
     white->Kd = Vector3f(0.725f, 0.71f, 0.68f);
-    Material* light = new Material(DIFFUSE, (8.0f * Vector3f(0.747f+0.058f, 0.747f+0.258f, 0.747f) + 15.6f * Vector3f(0.740f+0.287f,0.740f+0.160f,0.740f) + 18.4f *Vector3f(0.737f+0.642f,0.737f+0.159f,0.737f)));
+    Material *white_mf = new Material(MICROFACET, Vector3f(0.0f));
+    white_mf->Kd = Vector3f(0.725f, 0.71f, 0.68f);
+    Material *light = new Material(DIFFUSE, (8.0f * Vector3f(0.747f + 0.058f, 0.747f + 0.258f, 0.747f) + 15.6f * Vector3f(0.740f + 0.287f, 0.740f + 0.160f, 0.740f) + 18.4f * Vector3f(0.737f + 0.642f, 0.737f + 0.159f, 0.737f)));
     light->Kd = Vector3f(0.65f);
 
-    MeshTriangle floor("../models/cornellbox/floor.obj", white);
-    MeshTriangle shortbox("../models/cornellbox/shortbox.obj", white);
-    MeshTriangle tallbox("../models/cornellbox/tallbox.obj", white);
-    MeshTriangle left("../models/cornellbox/left.obj", red);
-    MeshTriangle right("../models/cornellbox/right.obj", green);
-    MeshTriangle light_("../models/cornellbox/light.obj", light);
+    MeshTriangle floor(std::string(MODELS_PATH) + "/cornellbox/floor.obj", white);
+    MeshTriangle shortbox(std::string(MODELS_PATH) + "/cornellbox/shortbox.obj", white);
+    MeshTriangle tallbox(std::string(MODELS_PATH) + "/cornellbox/tallbox.obj", white_mf);
+    MeshTriangle left(std::string(MODELS_PATH) + "/cornellbox/left.obj", red);
+    MeshTriangle right(std::string(MODELS_PATH) + "/cornellbox/right.obj", green);
+    MeshTriangle light_(std::string(MODELS_PATH) + "/cornellbox/light.obj", light);
+    // MeshTriangle bunny(std::string(MODELS_PATH) + "/bunny/bunny.obj", white);
 
     scene.Add(&floor);
     scene.Add(&shortbox);
@@ -38,6 +45,7 @@ int main(int argc, char** argv)
     scene.Add(&left);
     scene.Add(&right);
     scene.Add(&light_);
+    // scene.Add(&bunny);
 
     scene.buildBVH();
 
