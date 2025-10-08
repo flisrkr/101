@@ -1,12 +1,4 @@
 slides/
 .vscode/
-build/*/.cmake/
-build/*/CMakeFiles/
-build/*/homework/
-build/*/.ninja_deps
-build/*/.ninja_log
-build/*/build.ninja
-build/*/cmake_install.cmake
-build/*/CMakeCache.txt
-build/*/Makefile
+/build/
 homework/04/further_aa_solutions.md

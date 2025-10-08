@@ -9,7 +9,7 @@
     {
       "name": "hw00",
       "displayName": "[00] Basic Project",
-      "generator": "Unix Makefiles",
+      "generator": "MinGW Makefiles",
       "binaryDir": "${sourceDir}/build/hw00",
       "cacheVariables": {
         "HW": "00",
@@ -20,7 +20,7 @@
     {
       "name": "hw01",
       "displayName": "[01] Rasterizer",
-      "generator": "Unix Makefiles",
+      "generator": "MinGW Makefiles",
       "binaryDir": "${sourceDir}/build/hw01",
       "cacheVariables": {
         "HW": "01/code",
@@ -31,7 +31,7 @@
     {
       "name": "hw02",
       "displayName": "[02] Transform",
-      "generator": "Unix Makefiles",
+      "generator": "MinGW Makefiles",
       "binaryDir": "${sourceDir}/build/hw02",
       "cacheVariables": {
         "HW": "02/code",
@@ -41,7 +41,7 @@
     {
       "name": "hw03",
       "displayName": "[03] Texture Mapping",
-      "generator": "Unix Makefiles",
+      "generator": "MinGW Makefiles",
       "binaryDir": "${sourceDir}/build/hw03",
       "cacheVariables": {
         "HW": "03/code",
@@ -53,7 +53,7 @@
     {
       "name": "hw04",
       "displayName": "[04] Shading Models",
-      "generator": "Unix Makefiles",
+      "generator": "MinGW Makefiles",
       "binaryDir": "${sourceDir}/build/hw04",
       "cacheVariables": {
         "HW": "04/code",
@@ -64,7 +64,7 @@
     {
       "name": "hw05",
       "displayName": "[05] Ray Tracing",
-      "generator": "Unix Makefiles",
+      "generator": "MinGW Makefiles",
       "binaryDir": "${sourceDir}/build/hw05",
       "cacheVariables": {
         "HW": "05/code",
@@ -74,7 +74,7 @@
     {
       "name": "hw06",
       "displayName": "[06] BVH Acceleration",
-      "generator": "Unix Makefiles",
+      "generator": "MinGW Makefiles",
       "binaryDir": "${sourceDir}/build/hw06",
       "cacheVariables": {
         "HW": "06/code",
@@ -85,7 +85,7 @@
     {
       "name": "hw07",
       "displayName": "[07] Path Tracing",
-      "generator": "Unix Makefiles",
+      "generator": "MinGW Makefiles",
       "binaryDir": "${sourceDir}/build/hw07",
       "cacheVariables": {
         "HW": "07/code",
@@ -96,11 +96,11 @@
     {
       "name": "hw08",
       "displayName": "[08] Physic Simulation",
-      "generator": "Unix Makefiles",
+      "generator": "MinGW Makefiles",
       "binaryDir": "${sourceDir}/build/hw08",
       "cacheVariables": {
-        "HW": "08",
-        "CGL_ROOT_DIR": "${sourceDir}/homework/08/CGL",
+        "HW": "08/code",
+        "CGL_SOURCE_DIR": "${sourceDir}/homework/08/code/CGL",
         "CMAKE_BUILD_TYPE": "Release"
       }
     }
