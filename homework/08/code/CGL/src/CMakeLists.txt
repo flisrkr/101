@@ -41,7 +41,7 @@ set(CGL_HEADER
 # Building static library (always)
 #-------------------------------------------------------------------------------
 add_library(CGL STATIC ${CGL_SOURCE} ${CGL_HEADER})
-
+target_compile_definitions(CGL PRIVATE GLEW_STATIC)
 target_link_libraries(
   CGL
   ${GLEW_LIBRARIES}
