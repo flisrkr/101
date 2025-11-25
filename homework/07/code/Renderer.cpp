@@ -8,7 +8,7 @@
 
 inline float deg2rad(const float &deg) { return deg * M_PI / 180.0; }
 
-const float EPSILON = 0.001;
+const float EPSILON = 0.00001;
 
 // The main render function. This where we iterate over all pixels in the image,
 // generate primary rays and cast these rays into the scene. The content of the
@@ -22,27 +22,32 @@ static std::pair<int, int> dispensePixel(int t, int total_pixels, int num_thread
     return std::pair<int, int>(index_start, index_end);
 }
 
-static void discreteRender(const Scene &scene, int t, int total_pixels, int num_threads, float imageAspectRatio, float scale, std::vector<Vector3f> &framebuffer, Vector3f eye_pos, int spp)
+static void discreteRender(const Scene &scene, int t, int total_pixels, int num_threads,
+                           float imageAspectRatio, float scale, std::vector<Vector3f> &framebuffer,
+                           Vector3f eye_pos, int spp)
 {
     auto [index_start, index_end] = dispensePixel(t, total_pixels, num_threads);
     for (int ind = index_start; ind < index_end; ind++)
     {
-        float x = (2 * (ind % scene.width + 0.5) / (float)scene.width - 1) * imageAspectRatio * scale;
-        float y = (1 - 2 * (ind / scene.width + 0.5) / (float)scene.height) * scale;
-        Vector3f dir = normalize(Vector3f(-x, y, 1));
+        int px = ind % scene.width;
+        int py = ind / scene.width;
         for (int k = 0; k < spp; k++)
         {
+            float jitter_x = get_random_float();
+            float jitter_y = get_random_float();
+            float x = (2 * (px + jitter_x) / static_cast<float>(scene.width) - 1.f) * imageAspectRatio * scale;
+            float y = (1 - 2 * (py + jitter_y) / static_cast<float>(scene.height)) * scale;
+            Vector3f dir = normalize(Vector3f(-x, y, 1.f));
             framebuffer[ind] += scene.castRay(Ray(eye_pos, dir), 0) / spp;
         }
-        // UpdateProgress((ind / scene.width) / (float)scene.height);
     }
 }
 
 void Renderer::Render(const Scene &scene)
 {
     int total_pixels = scene.width * scene.height;
-    int num_threads = 8;
-    int spp = 256;
+    int num_threads = std::max(1u, std::thread::hardware_concurrency());
+    int spp = 32;
     std::vector<std::thread> thread_pool;
     std::vector<Vector3f> framebuffer(total_pixels);
 
@@ -50,7 +55,7 @@ void Renderer::Render(const Scene &scene)
     float imageAspectRatio = scene.width / (float)scene.height;
     Vector3f eye_pos(278, 273, -800);
     std::cout << "SPP: " << spp << "\n";
-    for (int t = 0; t < num_threads; t++)
+        for (int t = 0; t < num_threads; t++)
     {
         thread_pool.emplace_back(discreteRender, std::ref(scene), t, total_pixels, num_threads, imageAspectRatio, scale, std::ref(framebuffer), eye_pos, spp);
     }
@@ -58,31 +63,6 @@ void Renderer::Render(const Scene &scene)
     {
         thread.join();
     }
-
-    // int m = 0;
-    // // change the spp value to change sample ammount
-    // std::cout << "SPP: " << spp << "\n";
-    // for (uint32_t j = 0; j < scene.height; ++j)
-    // {
-    //     for (uint32_t i = 0; i < scene.width; ++i)
-    //     {
-    //         // generate primary ray direction
-    //         float x = (2 * (i + 0.5) / (float)scene.width - 1) *
-    //                   imageAspectRatio * scale;
-    //         float y = (1 - 2 * (j + 0.5) / (float)scene.height) * scale;
-
-    //         Vector3f dir = normalize(Vector3f(-x, y, 1));
-    //         // Vector3f dir = normalize(Vector3f(x, y, -1));
-    //         for (int k = 0; k < spp; k++)
-    //         {
-    //             framebuffer[m] += scene.castRay(Ray(eye_pos, dir), 0) / spp;
-    //         }
-    //         m++;
-    //     }
-    //     UpdateProgress(j / (float)scene.height);
-    // }
-    // UpdateProgress(1.f);
-
     // save framebuffer to file
     FILE *fp = fopen("binary.ppm", "wb");
     (void)fprintf(fp, "P6\n%d %d\n255\n", scene.width, scene.height);

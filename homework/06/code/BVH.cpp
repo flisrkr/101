@@ -181,7 +181,7 @@ Intersection BVHAccel::getIntersection(BVHBuildNode *node, const Ray &ray) const
         for (auto &leaf_object : node->objects)
         {
             Intersection inter_temp = leaf_object->getIntersection(ray);
-            if (inter_temp.distance < inter_result.distance)
+            if (inter_temp.happened && inter_temp.distance < inter_result.distance && inter_temp.distance > EPSILON)
             {
                 inter_result = inter_temp;
             }

@@ -105,7 +105,7 @@ Vector3f Scene::castRay(const Ray &ray, int depth) const
     // indirect illumination
     if (get_random_float() < RussianRoulette)
     {
-        Vector3f vector_sample = pos_shading.m->sample(ray.direction, pos_shading.normal);
+        Vector3f vector_sample = pos_shading.m->sample(-ray.direction, pos_shading.normal);
         Ray ray_sample(pos_shading.coords + pos_shading.normal * EPSILON, vector_sample.normalized());
         Intersection pos_sample = intersect(ray_sample);
         if (pos_sample.happened && !pos_sample.m->hasEmission())

@@ -104,23 +104,29 @@ private:
         B = crossProduct(C, N);
         return a.x * B + a.y * C + a.z * N;
     }
-
-    inline float NDF(const Vector3f &N, const Vector3f &h, const float alpha_square);
-    inline float G(const Vector3f &wi, const Vector3f &wo, const Vector3f &N, const Vector3f &h, const float alpha_square);
-    inline float G1(const Vector3f &w, const Vector3f &N, const float alpha_square);
+    // new functions to implement microfacet and PBR pipeline
+    inline Vector3f fresnelSchlick(const float h_dot_wi, const Vector3f &F_0);
+    inline float geometrySchlickSmith(const float N_dot_w);
+    inline float distributionGGX(const float N_dot_h);
 
 public:
     MaterialType m_type;
-    // Vector3f m_color;
     Vector3f m_emission;
-    float ior = 1.2;
-    Vector3f Kd, Ks;
-    float specularExponent = 44;
-    // Texture tex;
+    float ior;
+    // Vector3f Kd;
+
+    // new attributes to implement microfacet and PBR pipeline
+    float roughness;
+    float metallic;
+    Vector3f albedo;
+    Vector3f F_0;
+    float alpha;
+    float alpha_square;
+    float k;
 
     inline Material(MaterialType t = DIFFUSE, Vector3f e = Vector3f(0, 0, 0));
+    inline Material(MaterialType t, const Vector3f &e, float r, float m, const Vector3f &a);
     inline MaterialType getType();
-    // inline Vector3f getColor();
     inline Vector3f getColorAt(double u, double v);
     inline Vector3f getEmission();
     inline bool hasEmission();
@@ -133,11 +139,15 @@ public:
     inline Vector3f eval(const Vector3f &wi, const Vector3f &wo, const Vector3f &N);
 };
 
-Material::Material(MaterialType t, Vector3f e)
+Material::Material(MaterialType t, Vector3f e) : m_type(t), m_emission(e) {}
+
+Material::Material(MaterialType t, const Vector3f &e, float r, float m, const Vector3f &a)
+    : m_type(t), m_emission(e), roughness(r), metallic(m), albedo(a)
 {
-    m_type = t;
-    // m_color = c;
-    m_emission = e;
+    F_0 = lerp(Vector3f(0.04f), albedo, metallic);
+    alpha = std::max(EPSILON, roughness * roughness);
+    alpha_square = alpha * alpha;
+    k = (roughness + 1.f) * (roughness + 1.f) / 8.f;
 }
 
 MaterialType Material::getType() { return m_type; }
@@ -173,12 +183,17 @@ Vector3f Material::sample(const Vector3f &wi, const Vector3f &N)
     }
     case MICROFACET:
     {
-        // uniform sample on the hemisphere
-        float x_1 = get_random_float(), x_2 = get_random_float();
-        float z = std::fabs(1.0f - 2.0f * x_1);
-        float r = std::sqrt(1.0f - z * z), phi = 2 * M_PI * x_2;
-        Vector3f localRay(r * std::cos(phi), r * std::sin(phi), z);
-        return toWorld(localRay, N);
+        float u_1 = get_random_float();
+        float u_2 = get_random_float();
+
+        float cos_theta = sqrt((1 - u_1) / (1 + (alpha_square - 1) * u_1));
+        float sin_theta = sqrt(std::max(0.f, 1.f - cos_theta * cos_theta));
+        float phi = 2.f * M_PI * u_2;
+
+        Vector3f h_local(sin_theta * cos(phi), sin_theta * sin(phi), cos_theta);
+        Vector3f h = toWorld(h_local, N);
+
+        return reflect(-wi, h);
 
         break;
     }
@@ -200,11 +215,12 @@ float Material::pdf(const Vector3f &wi, const Vector3f &wo, const Vector3f &N)
     }
     case MICROFACET:
     {
-        // uniform sample probability 1 / (2 * PI)
-        if (dotProduct(wo, N) > 0.0f)
-            return 0.5f / M_PI;
-        else
-            return 0.0f;
+        Vector3f h = (wi + wo).normalized();
+        float N_dot_h = std::max(0.f, dotProduct(N, h));
+        float h_dot_wo = std::max(0.f, dotProduct(h, wo));
+        float D_term = distributionGGX(N_dot_h);
+        return std::max(EPSILON, (D_term * N_dot_h) / (4.f * h_dot_wo));
+
         break;
     }
     }
@@ -220,7 +236,7 @@ Vector3f Material::eval(const Vector3f &wi, const Vector3f &wo, const Vector3f &
         float cosalpha = dotProduct(N, wo);
         if (cosalpha > 0.0f)
         {
-            Vector3f diffuse = Kd / M_PI;
+            Vector3f diffuse = albedo / M_PI;
             return diffuse;
         }
         else
@@ -229,19 +245,26 @@ Vector3f Material::eval(const Vector3f &wi, const Vector3f &wo, const Vector3f &
     }
     case MICROFACET:
     {
-        float N_dot_wo = dotProduct(N, wo);
-        float N_dot_wi = dotProduct(N, wi);
+        float N_dot_wi = std::max(0.f, dotProduct(N, wi));
+        float N_dot_wo = std::max(0.f, dotProduct(N, wo));
+
         if (N_dot_wo > 0.f && N_dot_wi > 0.f)
         {
-            Vector3f h = normalize(wi + wo);
-            float alpha_square = 2.f / (specularExponent + 2.f);
-            float F_term;
-            fresnel(wi, N, ior, F_term);
-            float G_term = G(wi, wo, N, h, alpha_square);
-            float D_term = NDF(N, h, alpha_square);
-            Vector3f microfacet = Kd * F_term * G_term * D_term / (4.f * N_dot_wi * N_dot_wo);
-            Vector3f diffuse = Kd * (1.f - F_term) / M_PI;
-            return microfacet + diffuse;
+            Vector3f h = (wi + wo).normalized();
+            float h_dot_wi = std::max(0.f, dotProduct(h, wi));
+            float N_dot_h = std::max(0.f, dotProduct(N, h));
+
+            Vector3f F_term = fresnelSchlick(h_dot_wi, F_0);
+            float G_term = geometrySchlickSmith(N_dot_wi) * geometrySchlickSmith(N_dot_wo);
+            float D_term = distributionGGX(N_dot_h);
+
+            Vector3f specular = F_term * G_term * D_term /
+                                std::max(EPSILON, 4.f * N_dot_wi * N_dot_wo);
+
+            Vector3f Kd = (Vector3f(1.f) - F_term) * (1.f - metallic);
+            // Vector3f diffuse = Kd * albedo / M_PI;
+            // return specular + diffuse;
+            return specular;
         }
         else
         {
@@ -252,26 +275,25 @@ Vector3f Material::eval(const Vector3f &wi, const Vector3f &wo, const Vector3f &
     }
 }
 
-float Material::NDF(const Vector3f &N, const Vector3f &h, const float alpha_square)
+Vector3f Material::fresnelSchlick(const float h_dot_wi, const Vector3f &F_0)
 {
-    float N_dot_h = std::max(0.f, dotProduct(N, h));
-    float result = alpha_square / (M_PI * pow((N_dot_h * N_dot_h * (alpha_square - 1) + 1), 2));
-    return result;
+    float complement = 1.f - h_dot_wi;
+    return F_0 + (Vector3f(1.f) - F_0) * complement * complement *
+                     complement * complement * complement;
 }
 
-float Material::G(const Vector3f &wi, const Vector3f &wo, const Vector3f &N, const Vector3f &h, const float alpha_square)
+float Material::geometrySchlickSmith(const float N_dot_w)
 {
-    float G_i = G1(wi, N, alpha_square);
-    float G_o = G1(wo, N, alpha_square);
-    float G_term = G_i * G_o;
-    return G_term;
+    float complement = 1.f - k;
+    return N_dot_w / (complement * N_dot_w + k);
 }
 
-float Material::G1(const Vector3f &w, const Vector3f &N, const float alpha_square)
+float Material::distributionGGX(const float N_dot_h)
 {
-    float N_dot_w = std::max(0.f, dotProduct(N, w));
-    float result = N_dot_w / (N_dot_w + sqrt(alpha_square + N_dot_w * N_dot_w * (1.f - alpha_square)));
-    return result;
-}
 
+    float N_dot_h_square = N_dot_h * N_dot_h;
+    float denom = N_dot_h_square * (alpha_square - 1.f) + 1.f;
+    denom = std::max(M_PI * denom * denom, EPSILON);
+    return alpha_square / denom;
+}
 #endif // RAYTRACING_MATERIAL_H
