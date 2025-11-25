@@ -47,7 +47,7 @@ void Renderer::Render(const Scene &scene)
 {
     int total_pixels = scene.width * scene.height;
     int num_threads = std::max(1u, std::thread::hardware_concurrency());
-    int spp = 32;
+    int spp = 2048;
     std::vector<std::thread> thread_pool;
     std::vector<Vector3f> framebuffer(total_pixels);
 

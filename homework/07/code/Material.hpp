@@ -174,19 +174,29 @@ Vector3f Material::sample(const Vector3f &wi, const Vector3f &N)
     {
         // uniform sample on the hemisphere
         float x_1 = get_random_float(), x_2 = get_random_float();
-        float z = std::fabs(1.0f - 2.0f * x_1);
-        float r = std::sqrt(1.0f - z * z), phi = 2 * M_PI * x_2;
-        Vector3f localRay(r * std::cos(phi), r * std::sin(phi), z);
+        float r = sqrt(x_1);
+        float theta = 2.f * M_PI * x_2;
+        Vector3f localRay(r * cos(theta), r * sin(theta), sqrt(std::max(0.f, 1 - x_1)));
         return toWorld(localRay, N);
 
         break;
     }
     case MICROFACET:
     {
+        float diffuse_prob = clamp(0.05f, 0.95f, 1.f - metallic);
+        if (get_random_float() < diffuse_prob)
+        {
+            // sample diffuse component
+            float x_1 = get_random_float(), x_2 = get_random_float();
+            float r = sqrt(x_1);
+            float theta = 2.f * M_PI * x_2;
+            Vector3f localRay(r * cos(theta), r * sin(theta), sqrt(std::max(0.f, 1 - x_1)));
+            return toWorld(localRay, N);
+        }
         float u_1 = get_random_float();
         float u_2 = get_random_float();
 
-        float cos_theta = sqrt((1 - u_1) / (1 + (alpha_square - 1) * u_1));
+        float cos_theta = sqrt((1 - u_1) / (1 + (alpha - 1) * u_1));
         float sin_theta = sqrt(std::max(0.f, 1.f - cos_theta * cos_theta));
         float phi = 2.f * M_PI * u_2;
 
@@ -215,11 +225,15 @@ float Material::pdf(const Vector3f &wi, const Vector3f &wo, const Vector3f &N)
     }
     case MICROFACET:
     {
+        float diffuse_prob = clamp(0.05f, 0.95f, 1.f - metallic);
+        float cos_theta = dotProduct(N, wo);
+        float pdf_diffuse = std::max(0.f, cos_theta) / M_PI;
         Vector3f h = (wi + wo).normalized();
         float N_dot_h = std::max(0.f, dotProduct(N, h));
         float h_dot_wo = std::max(0.f, dotProduct(h, wo));
         float D_term = distributionGGX(N_dot_h);
-        return std::max(EPSILON, (D_term * N_dot_h) / (4.f * h_dot_wo));
+        float pdf_specular = std::max(EPSILON, (D_term * N_dot_h) / (4.f * h_dot_wo));
+        return diffuse_prob * pdf_diffuse + (1.f - diffuse_prob) * pdf_specular;
 
         break;
     }
@@ -262,9 +276,9 @@ Vector3f Material::eval(const Vector3f &wi, const Vector3f &wo, const Vector3f &
                                 std::max(EPSILON, 4.f * N_dot_wi * N_dot_wo);
 
             Vector3f Kd = (Vector3f(1.f) - F_term) * (1.f - metallic);
-            // Vector3f diffuse = Kd * albedo / M_PI;
-            // return specular + diffuse;
-            return specular;
+            Vector3f diffuse = Kd * albedo / M_PI;
+            return specular + diffuse;
+            // return specular;
         }
         else
         {
@@ -292,8 +306,8 @@ float Material::distributionGGX(const float N_dot_h)
 {
 
     float N_dot_h_square = N_dot_h * N_dot_h;
-    float denom = N_dot_h_square * (alpha_square - 1.f) + 1.f;
+    float denom = N_dot_h_square * (alpha - 1.f) + 1.f;
     denom = std::max(M_PI * denom * denom, EPSILON);
-    return alpha_square / denom;
+    return alpha / denom;
 }
 #endif // RAYTRACING_MATERIAL_H
